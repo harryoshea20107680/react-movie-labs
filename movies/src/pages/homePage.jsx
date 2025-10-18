@@ -23,6 +23,13 @@ const HomePage = (props) => {
     e.preventDefault()
     props.onUserInput(type, value)
   }
+    
+    const addToFavorites = (movieId) => {
+    const updatedMovies = movies.map((m) =>
+      m.id === movieId ? { ...m, favorite: true } : m
+    );
+    setMovies(updatedMovies);
+  };
 
 
 
@@ -55,7 +62,8 @@ const HomePage = (props) => {
     />
 
         </Grid>
-            <MovieList movies={displayedMovies} />
+                <MovieList movies={displayedMovies} selectFavorite={addToFavorites} />
+
       </Grid>
     </Grid>
   );
