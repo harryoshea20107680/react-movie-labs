@@ -1,16 +1,16 @@
 import React from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getMovieRecommendations } from "../../api/tmdb-api";
+import { getSimilarMovies } from "../../api/tmdb-api";
 import Spinner from "../spinner";
 import PageTemplate from "../templateMovieListPage";
 import AddToFavoritesIcon from "../cardIcons/addToFavorites";
 
-const MovieRecommendations = ({ movieId, movie }) => {
+const SimilarMovies = ({ movieId }) => {
   const queryClient = useQueryClient();
 
   const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["recommendations", movieId],
-    queryFn: () => getMovieRecommendations(movieId),
+    queryKey: ["similarMovies", movieId],
+    queryFn: () => getSimilarMovies(movieId),
   });
 
   if (isLoading) return <Spinner />;
@@ -20,11 +20,11 @@ const MovieRecommendations = ({ movieId, movie }) => {
 
   return (
     <PageTemplate
-      title={"If you liked this movie, you'll love:"}
+      title="Similar Movies"
       movies={movies}
       action={(movie) => <AddToFavoritesIcon movie={movie} />}
     />
   );
 };
 
-export default MovieRecommendations;
+export default SimilarMovies;

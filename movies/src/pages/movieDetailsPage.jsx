@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import Spinner from '../components/spinner'
 // import useMovie from "../hooks/useMovie";   Redundant
 import MovieRecommendations from "../components/movieRecommendations";
+import SimilarMovies from "../components/similarMovies";
 import { Tabs, Tab, Box } from "@mui/material";
 import { useState } from "react";
 
@@ -38,11 +39,13 @@ const MoviePage = (props) => {
             <Tabs value={tab} onChange={(e, v) => setTab(v)}>
             <Tab label="Overview" />
             <Tab label="Recommendations" />
+            <Tab label="Similar" />
             </Tabs>
             </Box>
 
             {tab === 0 && <MovieDetails movie={movie} />}
             {tab === 1 && <MovieRecommendations movieId={id} />}
+            {tab === 2 && <SimilarMovies movieId={id} />}
           </PageTemplate>
         </>
       ) : (
