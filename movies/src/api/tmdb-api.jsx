@@ -180,3 +180,22 @@ export const getTrendingMovies = ({ timeWindow = "week", language = "en-US" } = 
       throw error
    });
   };
+
+export const getMovieRecommendations = (movieId) => {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/recommendations?api_key=${
+    import.meta.env.VITE_TMDB_KEY
+  }`;
+
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then((error) => {
+          throw new Error(error.status_message || "Something went wrong");
+        });
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
