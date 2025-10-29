@@ -109,9 +109,9 @@ export const getUpcomingMovies = () => {
     });
 };
 
-export const getTrendingMovies = ({ timeWindow = "day", language = "en-US" } = {}) => {
+export const getTrendingMovies = ({ timeWindow = "week", language = "en-US" } = {}) => {
   const url = `https://api.themoviedb.org/3/trending/movie/${timeWindow}` +
-              `?api_key=${import.meta.env.VITE_TMDB_KEY}&language=${language}`;
+              `?api_key=${import.meta.env.VITE_TMDB_KEY}`;
 
   return fetch(url)
     .then((response) => {
@@ -126,3 +126,21 @@ export const getTrendingMovies = ({ timeWindow = "day", language = "en-US" } = {
       throw error;
     });
 };
+
+  export const getPopularMovies = () => {
+    const url = `https://api.themoviedb.org/3/movie/popular?api_key=${
+    import.meta.env.VITE_TMDB_KEY}`;
+
+    return fetch(url)
+    .then( (response) => {
+      if (!response.ok) {
+        return response.json().then((error) => {
+          throw new Error(error.status_message || "Something went wrong");
+        });
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error
+   });
+  };

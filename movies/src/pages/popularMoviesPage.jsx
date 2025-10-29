@@ -1,16 +1,14 @@
 import React, { useContext } from "react";
 import PageTemplate from "../components/templateMovieListPage";
-import { MoviesContext } from "../contexts/moviesContext";
 import { useQuery } from "@tanstack/react-query";
-import { getMovies } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
-import { getTrendingMovies } from "../api/tmdb-api";
+import { getPopularMovies } from "../api/tmdb-api";
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites';
 
-const TrendingMoviePage = (props) => {
+const PopularMoviesPage = (props) => {
     const { data, isLoading, isError, error } = useQuery({
-    queryKey: ["trending", "week", "en-US"],
-    queryFn: () => getTrendingMovies({ timeWindow: "week", language: "en-US" }),
+    queryKey: ["popularMovies", "en-US"],
+    queryFn: () => getPopularMovies({ language: "en-US" }),
   })
 
   if (isLoading) {
@@ -26,7 +24,7 @@ const TrendingMoviePage = (props) => {
   const movies = data.results;
   return (
     <PageTemplate
-      title="Trending Movies"
+      title="Popular Movies"
       movies={movies}
       action={(movie) => {
         return (
@@ -41,5 +39,5 @@ const TrendingMoviePage = (props) => {
 
 };
 
-export default TrendingMoviePage;
+export default PopularMoviesPage;
 
