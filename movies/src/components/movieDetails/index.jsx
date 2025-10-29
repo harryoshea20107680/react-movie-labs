@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import React, { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
-
+import LanguageIcon from "@mui/icons-material/Language";
 
 const root = {
     display: "flex",
@@ -70,6 +70,10 @@ const [drawerOpen, setDrawerOpen] = useState(false);
         <Chip
           icon={<StarRate />}
           label={`${movie.vote_average} (${movie.vote_count})`}
+        />
+        <Chip
+          icon={<LanguageIcon />}
+          label={`Original Language: ${movie.original_language.toUpperCase()} `}
         />
         <Chip label={`Released: ${movie.release_date}`} />
       </Paper>
