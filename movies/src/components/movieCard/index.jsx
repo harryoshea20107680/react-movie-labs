@@ -30,6 +30,19 @@ export default function MovieCard({ movie, action }) {
     addToFavorites(movie);
   };
 
+  let Date1 = (movie.release_date);
+  var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
+
+   
+  function DateConversion(Date1) {
+    Date1=(movie.release_date).substr(2,2); //yr
+    Date1=months[parseInt((movie.release_date).substr(5,2))]+' '+Date1; //month yr
+    Date1=(movie.release_date.substr(8,2)+' '+Date1); //day month yr
+
+    return Date1;
+    
+  };
 
   return (
     <Card>
@@ -61,7 +74,7 @@ export default function MovieCard({ movie, action }) {
           <Grid size={{xs: 6}}>
             <Typography variant="h6" component="p">
               <CalendarIcon fontSize="small" />
-              {movie.release_date}
+              {DateConversion(Date1)}
             </Typography>
           </Grid>
           <Grid size={{xs: 6}}>
