@@ -11,6 +11,7 @@ import React, { useState } from "react";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
 import LanguageIcon from "@mui/icons-material/Language";
+import MovieCast from "../movieCast";
 
 const root = {
     display: "flex",
@@ -76,6 +77,10 @@ const [drawerOpen, setDrawerOpen] = useState(false);
           label={`Original Language: ${movie.original_language.toUpperCase()} `}
         />
         <Chip label={`Released: ${movie.release_date}`} />
+        
+        
+        <MovieCast movieId={movie.id} />
+        
       </Paper>
             <Fab
         color="secondary"

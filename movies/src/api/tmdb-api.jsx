@@ -218,3 +218,54 @@ export const getSimilarMovies = (movieId) => {
       throw error;
     });
 };
+
+export const getMovieCredits = (movieId) => {
+  const url = `https://api.themoviedb.org/3/movie/${movieId}/credits?api_key=${import.meta.env.VITE_TMDB_KEY}`;
+  
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then((error) => {
+          throw new Error(error.status_message || "Something went wrong");
+        });
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+export const getPerson = (personId) => {
+  const url = `https://api.themoviedb.org/3/person/${personId}?api_key=${import.meta.env.VITE_TMDB_KEY}`;
+  
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then((error) => {
+          throw new Error(error.status_message || "Something went wrong");
+        });
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
+
+export const getPersonMovieCredits = (personId) => {
+  const url = `https://api.themoviedb.org/3/person/${personId}/movie_credits?api_key=${import.meta.env.VITE_TMDB_KEY}`;
+  
+  return fetch(url)
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then((error) => {
+          throw new Error(error.status_message || "Something went wrong");
+        });
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      throw error;
+    });
+};
