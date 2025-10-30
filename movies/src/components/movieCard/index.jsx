@@ -31,7 +31,7 @@ export default function MovieCard({ movie, action }) {
   };
 
   let Date1 = (movie.release_date);
-  var months = [ "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+  var months = [ "0", "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" ];
 
    
