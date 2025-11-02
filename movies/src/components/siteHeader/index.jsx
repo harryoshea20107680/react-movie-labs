@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -7,21 +7,22 @@ import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { useNavigate } from "react-router";
-import { styled } from '@mui/material/styles';
-import { useTheme } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
+import { styled, useTheme } from "@mui/material/styles";
+import { ColorModeContext } from "../../main";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
 
 const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
 
 const SiteHeader = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
-
+  
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  
+  const { toggle } = useContext(ColorModeContext); 
   const navigate = useNavigate();
 
   const menuOptions = [
@@ -45,14 +46,19 @@ const SiteHeader = () => {
 
   return (
     <>
-      <AppBar position="fixed" color="secondary">
-        <Toolbar>
-          <Typography variant="h4" sx={{ flexGrow: 1 }}>
+      <AppBar position="fixed" color="primary">
+        <Toolbar sx={{ gap: 2 }}>
+          <Typography variant="h5" sx={{ flexGrow: 1, fontWeight: 700 }}>
             TMDB Client
           </Typography>
           <Typography variant="h6" sx={{ flexGrow: 1 }}>
             All you ever wanted to know about Movies!
           </Typography>
+
+          <IconButton color="inherit" aria-label="toggle dark mode" onClick={toggle}>
+            {theme.palette.mode === "dark" ? <LightModeIcon /> : <DarkModeIcon />}
+          </IconButton>
+
             {isMobile ? (
               <>
                 <IconButton

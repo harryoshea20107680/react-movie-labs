@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useMemo, useState, useEffect, createContext, useContext} from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Route, Navigate, Routes } from "react-router";
+import { BrowserRouter, Route, Navigate, Routes } from "react-router-dom";
 import HomePage from "./pages/homePage";
 import MoviePage from "./pages/movieDetailsPage";
 import FavoriteMoviesPage from "./pages/favoriteMoviesPage";
@@ -16,6 +16,11 @@ import PopularMoviesPage from "./pages/popularMoviesPage";
 import TopRatedMoviesPage from "./pages/topRatedMoviesPage";
 import NowPlayingMoviesPage from "./pages/nowPlayingMoviesPage";
 import PersonDetailsPage from "./pages/personDetailsPage";
+import { ThemeProvider, CssBaseline, Container } from "@mui/material";
+import { createAppTheme } from "./theme";
+import "./index.css";  
+
+export const ColorModeContext = createContext({ mode: "light", toggle: () => {} });
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,9 +33,35 @@ const queryClient = new QueryClient({
 });
 
 const App = () => {
+  const [mode, setMode] = useState("light");
+
+  useEffect(() => {
+    const saved = localStorage.getItem("color-mode");
+    if (saved === "dark" || saved === "light") setMode(saved);
+  }, []);
+
+
+  const theme = useMemo(() => createAppTheme(mode), [mode]);
+
+  const colorMode = useMemo(
+    () => ({
+      mode,
+      toggle: () => {
+        setMode(prev => {
+          const next = prev === "light" ? "dark" : "light";
+          localStorage.setItem("color-mode", next);
+          return next;
+        });
+      },
+    }),
+    [mode]
+  );
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
+     <ColorModeContext.Provider value={colorMode}>
+      <ThemeProvider theme={theme}>
+       <CssBaseline />  
+        <BrowserRouter>
         <SiteHeader />
         <MoviesContextProvider>
           <Routes>
@@ -47,9 +78,11 @@ const App = () => {
             <Route path="/movies/now_playing" element={<NowPlayingMoviesPage />} />
             <Route path="/people/:id" element={<PersonDetailsPage />} />
           </Routes>
-        </MoviesContextProvider>
-      </BrowserRouter>
-      <ReactQueryDevtools initialIsOpen={false} />
+         </MoviesContextProvider>
+        </BrowserRouter>
+       <ReactQueryDevtools initialIsOpen={false} />
+       </ThemeProvider>
+     </ColorModeContext.Provider>
     </QueryClientProvider>
   );
 };

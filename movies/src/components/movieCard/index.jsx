@@ -45,7 +45,7 @@ export default function MovieCard({ movie, action }) {
   };
 
   return (
-    <Card>
+    <Card className="card-hover">
             <CardHeader
         avatar={
           movie.favorite ? (
